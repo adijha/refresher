@@ -1,8 +1,53 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
-import * as cp from 'child_process'
+const { exec } = require('child_process')
+const adminDashboard = 'Razorpay - Admin Panel'
 
+function reloadTab(tabId: string) {
+	exec(
+		'chrome-cli reload -t ' + tabId,
+		(error: { message: any }, stdout: any, stderr: any) => {
+			if (error) {
+				console.log(`error: ${error.message}`)
+				return
+			}
+			if (stderr) {
+				console.log(`stderr: ${stderr}`)
+				return
+			}
+			if (stdout) {
+				console.log(`stdout: ${stdout}`)
+				return
+			}
+		}
+	)
+	;``
+}
+
+function refreshChromeTab(matchString: string) {
+	exec(
+		'chrome-cli list tabs',
+		(error: { message: string }, stdout: string, stderr: string) => {
+			let tabId = ''
+			if (error) {
+				console.log(`error: ${error.message}`)
+				return
+			}
+			if (stderr) {
+				console.log(`stderr: ${stderr}`)
+				return
+			}
+			let arrTab = stdout.split('\n')
+			arrTab.forEach((element: string) => {
+				if (element.includes(matchString)) {
+					tabId = element.split(' ')[0].replace('[', '').replace(']', '')
+				}
+			})
+			reloadTab(tabId)
+		}
+	)
+}
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -15,10 +60,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('refresher.runadmin', () => {
 		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		// cp.exec('ls', (err: string, stdout: string, stderr: string) => {
-		// 	console.log('stdout: ' + stdout)
-		// 	console.log('stderr: ' + stderr)
 
 		vscode.window.createTerminal({
 			hideFromUser: false,
@@ -35,12 +76,10 @@ export function activate(context: vscode.ExtensionContext) {
 			shellArgs: ['-c', 'npm run serve'],
 		})
 
-		vscode.window.createTerminal({
-			hideFromUser: false,
-			cwd: vscode.workspace.rootPath,
-			name: 'refresher',
-			shellPath: 'zsh',
-			shellArgs: ['-c', 'nodemon  -e js,styl  refresher.js'],
+		var watcher = vscode.workspace.createFileSystemWatcher('**/*.{styl,js}')
+
+		watcher.onDidChange(function () {
+			refreshChromeTab(adminDashboard)
 		})
 
 		vscode.window.showInformationMessage(
