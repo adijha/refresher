@@ -1,5 +1,3 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 const { exec } = require('child_process')
 const adminDashboard = 'Razorpay - Admin Panel'
@@ -48,66 +46,42 @@ function refreshChromeTab(matchString: string) {
 		}
 	)
 }
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "refresher" is now active!')
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('refresher.runadmin', () => {
-		// The code you place here will be executed every time your command is executed
-
-		vscode.window.createTerminal({
-			hideFromUser: false,
-			cwd: vscode.workspace.rootPath,
-			name: 'refresher',
-			shellPath: 'zsh',
-			shellArgs: ['-c', 'npm run start'],
-		})
-		vscode.window.createTerminal({
-			hideFromUser: false,
-			cwd: vscode.workspace.rootPath,
-			name: 'refresher',
-			shellPath: 'zsh',
-			shellArgs: ['-c', 'npm run serve'],
-		})
-
-		var watcher = vscode.workspace.createFileSystemWatcher('**/*.{styl,js}')
-
-		watcher.onDidChange(function () {
-			refreshChromeTab(adminDashboard)
-		})
-
-		vscode.window.showInformationMessage(
-			'admin dashboard ran',
-			vscode.workspace?.rootPath || ''
-		)
+function createTerminal(command: string) {
+	vscode.window.createTerminal({
+		hideFromUser: false,
+		cwd: vscode.workspace.rootPath,
+		name: 'refresher',
+		shellPath: 'zsh',
+		shellArgs: ['-c', command],
 	})
+}
+function createWatcher(filePath: string, matchString: string) {
+	let watcher = vscode.workspace.createFileSystemWatcher(filePath)
+	watcher.onDidChange(() => {
+		refreshChromeTab(matchString)
+	})
+}
+export function activate(context: vscode.ExtensionContext) {
+	let runAndWatchServer = vscode.commands.registerCommand(
+		'refresher.runadmin',
+		() => {
+			createTerminal('npm run start')
+			createTerminal('npm run serve')
+			createWatcher('**/*.{styl,js}', adminDashboard)
+			vscode.window.showInformationMessage('Admin dashboard ran successfully')
+		}
+	)
 
 	let installChromeCLI = vscode.commands.registerCommand(
 		'refresher.installChromeCli',
 		async () => {
-			await vscode.window.createTerminal({
-				hideFromUser: false,
-				cwd: vscode.workspace.rootPath,
-				name: 'refresher',
-				shellPath: 'zsh',
-				shellArgs: ['-c', 'brew install chrome-cli'],
-			})
-
-			vscode.window.showInformationMessage(
-				'Chrome Cli install',
-				vscode.workspace?.rootPath || ''
-			)
+			await createTerminal('brew install chrome-cli')
+			vscode.window.showInformationMessage('Success!!, Chrome Cli is installed')
 		}
 	)
 
-	context.subscriptions.push(disposable, installChromeCLI)
+	context.subscriptions.push(runAndWatchServer, installChromeCLI)
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}
