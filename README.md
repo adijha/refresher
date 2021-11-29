@@ -22,8 +22,6 @@ After that you can good to go, press `command+shift+p` and execute `run admin pa
 
 ![image](https://user-images.githubusercontent.com/42930642/143868151-b6a5ab77-df0c-4787-99e3-05934dbf38d2.png)
 
-
-![image](https://user-images.githubusercontent.com/42930642/143867853-dd919d80-c0fd-46b7-9f51-0745a80021df.png)
 ![image](https://user-images.githubusercontent.com/42930642/143867886-a9d8aead-f988-44f0-bb6c-6d4a34a3281d.png)
 
 
