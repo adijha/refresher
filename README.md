@@ -1,4 +1,4 @@
-# refresher README
+# Refresher `A VS CODE EXTENSION`
 
 It will refresh admin dashboard chrome tab automatically, whenever you change anything in .js or .styl file
 
