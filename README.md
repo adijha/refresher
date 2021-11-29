@@ -18,6 +18,11 @@ After that you can good to go, press `command+shift+p` and execute `run admin pa
 
 ## Screenshots of each steps
 
+![image](https://user-images.githubusercontent.com/42930642/143867853-dd919d80-c0fd-46b7-9f51-0745a80021df.png)
+![image](https://user-images.githubusercontent.com/42930642/143867871-0cfe2a27-e973-42fa-ab85-b2b2abe73065.png)
+![image](https://user-images.githubusercontent.com/42930642/143867886-a9d8aead-f988-44f0-bb6c-6d4a34a3281d.png)
+
+
 <!-- ``` -->
 
 ## Support
