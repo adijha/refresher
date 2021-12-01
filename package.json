@@ -5,6 +5,7 @@
 	"repository": "https://github.com/adijha/refresher",
 	"version": "0.0.2",
 	"publisher": "adijha07",
+	"icon": "nimbu.png",
 	"engines": {
 		"vscode": "^1.62.0"
 	},
