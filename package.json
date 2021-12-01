@@ -3,7 +3,7 @@
 	"displayName": "refresher",
 	"description": "It refreshes chrome tab on code change",
 	"repository": "https://github.com/adijha/refresher",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "adijha07",
 	"icon": "nimbu.png",
 	"engines": {
