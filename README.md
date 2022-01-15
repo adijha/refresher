@@ -2,6 +2,7 @@
 
 It will refresh admin dashboard chrome tab automatically, whenever you change anything in .js or .styl file
 
+
 ## Features
 
 It will refresh chrome tab on code change, It will also take care of `npm run start` and `npm run serve`
@@ -32,6 +33,7 @@ After that you can good to go, press `command+shift+p` and execute `run admin pa
 You can connect with me at: `mail@adijha.com` || `aditya.jha@razorpay.com`
 
 ## Known Issues
+I have only tested it with mac
 
 It doesn't work with multiple chrome windows open
 <br/>
