@@ -7,15 +7,15 @@ function reloadTab(tabId: string) {
 		'chrome-cli reload -t ' + tabId,
 		(error: { message: any }, stdout: any, stderr: any) => {
 			if (error) {
-				console.log(`error: ${error.message}`)
+				vscode.window.showInformationMessage(`error: ${error.message}`)
 				return
 			}
 			if (stderr) {
-				console.log(`stderr: ${stderr}`)
+				vscode.window.showInformationMessage(`stderr: ${stderr}`)
 				return
 			}
 			if (stdout) {
-				console.log(`stdout: ${stdout}`)
+				vscode.window.showInformationMessage(`stdout: ${stdout}`)
 				return
 			}
 		}
@@ -29,11 +29,11 @@ function refreshChromeTab(matchString: string) {
 		(error: { message: string }, stdout: string, stderr: string) => {
 			let tabId = ''
 			if (error) {
-				console.log(`error: ${error.message}`)
+				vscode.window.showInformationMessage(`error: ${error.message}`)
 				return
 			}
 			if (stderr) {
-				console.log(`stderr: ${stderr}`)
+				vscode.window.showInformationMessage(`stderr: ${stderr}`)
 				return
 			}
 			let arrTab = stdout.split('\n')
