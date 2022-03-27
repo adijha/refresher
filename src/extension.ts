@@ -2,20 +2,24 @@ import * as vscode from 'vscode'
 const { exec } = require('child_process')
 const adminDashboard = 'Razorpay - Admin Panel'
 
+function showInfoMessage(message: string){
+	vscode.window.showInformationMessage(message)
+}
+
 function reloadTab(tabId: string) {
 	exec(
 		'chrome-cli reload -t ' + tabId,
 		(error: { message: any }, stdout: any, stderr: any) => {
 			if (error) {
-				vscode.window.showInformationMessage(`error: ${error.message}`)
+				showInfoMessage(`error: ${error.message}`)
 				return
 			}
 			if (stderr) {
-				vscode.window.showInformationMessage(`stderr: ${stderr}`)
+				showInfoMessage(`stderr: ${stderr}`)
 				return
 			}
 			if (stdout) {
-				vscode.window.showInformationMessage(`stdout: ${stdout}`)
+				showInfoMessage(`stdout: ${stdout}`)
 				return
 			}
 		}
@@ -29,11 +33,11 @@ function refreshChromeTab(matchString: string) {
 		(error: { message: string }, stdout: string, stderr: string) => {
 			let tabId = ''
 			if (error) {
-				vscode.window.showInformationMessage(`error: ${error.message}`)
+				showInfoMessage(`error: ${error.message}`)
 				return
 			}
 			if (stderr) {
-				vscode.window.showInformationMessage(`stderr: ${stderr}`)
+				showInfoMessage(`stderr: ${stderr}`)
 				return
 			}
 			let arrTab = stdout.split('\n')
@@ -69,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
 			createTerminal('npm run start')
 			createTerminal('npm run serve')
 			createWatcher('**/*.{styl,js}', adminDashboard)
-			vscode.window.showInformationMessage('Admin dashboard ran successfully')
+			showInfoMessage('Admin dashboard ran successfully')
 		}
 	)
 
@@ -77,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 		'refresher.installChromeCli',
 		async () => {
 			await createTerminal('brew install chrome-cli')
-			vscode.window.showInformationMessage('Success!!, Chrome Cli is installed')
+			showInfoMessage('Success!!, Chrome Cli is installed')
 		}
 	)
 
