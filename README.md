@@ -30,7 +30,7 @@ After that you can good to go, press `command+shift+p` and execute `run admin pa
 
 ## Support
 
-You can connect with me at: `mail@adijha.com` || `aditya.jha@razorpay.com`
+You can connect with me at: `mail@adijha.com`
 
 ## Known Issues
 I have only tested it with mac
@@ -46,4 +46,4 @@ This is fist alpha preview release
 
 ### 1.0.0
 
-Initial release of ...
+Initial release
